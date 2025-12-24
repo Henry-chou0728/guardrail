@@ -1,4 +1,4 @@
-# 【技術報告】NeMo Guardrails + LangChain 金融 RAG 系統
+# 【技術報告】NeMo Guardrails + LangChain RAG 系統
 
 本系統是一個結合了 **NeMo Guardrails** 與 **LangChain** 的檢索增強生成 (RAG) 解決方案。專為金融問答場景設計，具備「安全護欄」與「外部知識庫檢索」雙重功能。
 
