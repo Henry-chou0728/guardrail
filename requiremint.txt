@@ -1,0 +1,9 @@
+openai
+langchain
+langchain-openai
+langchain-chroma
+langchain-community
+nemoguardrails
+python-dotenv
+pypdf
+chromadb
