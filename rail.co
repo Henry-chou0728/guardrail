@@ -1,0 +1,47 @@
+# --- 定義使用者意圖 (Intents) - 加入中文範例 ---
+
+define user ask financial
+  "請問 NVDA 的營收是多少？"
+  "上季度的股價表現如何？"
+  "幫我總結這份財報"
+  "這間公司的風險有哪些？"
+  "What is the revenue?" 
+
+define user ask off_topic
+  "教我做蛋糕"
+  "講個笑話來聽聽"
+  "寫一首關於雨的詩"
+  "誰是法國總統？"
+  "How to bake a cake?"
+
+# --- 定義機器人回應 (Bot Messages) - 改為全中文 ---
+
+define bot refuse to answer
+  "我是金融 AI 助理，我只能回答與金融數據或市場分析相關的問題，無法回答其他話題。"
+
+# --- 定義流程 (Flows) ---
+
+# 1. 攔截離題問題
+define flow check off_topic
+  user ask off_topic
+  bot refuse to answer
+  stop
+
+# 2. 金融 RAG 標準流程
+define flow answer financial question
+  user ask financial
+  
+  # 執行檢索
+  $context = execute retrieve_knowledge(query=$last_user_message)
+  
+  # 生成回答
+  $answer = execute generate_answer(context=$context, question=$last_user_message)
+  
+  bot $answer
+
+# 3. 預設處理 (Fallback)
+define flow fallback
+  user ...
+  $context = execute retrieve_knowledge(query=$last_user_message)
+  $answer = execute generate_answer(context=$context, question=$last_user_message)
+  bot $answer
